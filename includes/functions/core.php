@@ -3,6 +3,7 @@
 if ( ! defined('ABSPATH') ) {
     die('Direct access not permitted.');
 }
+
 function adding_custom_meta_boxes( $post_type, $post ) {
 	add_meta_box( 
 		'my-meta-box',
@@ -16,12 +17,21 @@ function adding_custom_meta_boxes( $post_type, $post ) {
 function render_my_meta_box($post) {
 	$citacio_citas = get_post_meta( $post->ID, 'citacio_citas', true );
 	wp_nonce_field( 'citacio_valida', 'citacio_valida_nonce' ); ?>
-	<table width="100%" cellpadding="1" cellspacing="1" border="0">
-		<tr>
-		  <td width="20%"><strong><?php __('Citas'); ?></strong></td>
-		  <td width="80%"><input type="text" name="citacio_citas" value="<?php echo sanitize_text_field($citacio_citas);?>" class="large-text" placeholder="Agregue citas" /></td>
-		</tr>
-	</table>
+		
+		<?php 
+		$args = array(  
+		'quicktags' => false,  
+		'textarea_rows' => 5, 
+		'media_buttons' => false, 
+		'tinymce'       => array( 
+		'toolbar1'    => 'bold,italic,strikethrough,underline,forecolor,charmap,outdent,indent', 
+		'toolbar2'    => '', 
+		)
+		, ); 
+		$editor_id = 'citacio_citas';         
+		wp_editor( $citacio_citas, $editor_id, $args );
+		?>
+			
   <?php
 }
 function citacio_save_data($post_id) {
@@ -41,7 +51,7 @@ function citacio_save_data($post_id) {
     return $post_id;
   }
    $old_citacio_citas = get_post_meta( $post_id, 'citacio_citas', true );
-   $citacio_citas = sanitize_text_field( $_POST['citacio_citas'] );
+   $citacio_citas =  $_POST['citacio_citas'] ;
    update_post_meta( $post_id, 'citacio_citas', $citacio_citas, $old_citacio_citas );
 }
 add_action( 'save_post', 'citacio_save_data' );
