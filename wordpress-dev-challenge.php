@@ -7,17 +7,17 @@
  * This file is responsible for starting the plugin using the main plugin class file.
  *
  * @since 0.0.1
- * @package Plugin_Name
+ * @package wordpress-dev-challenge
  *
  * @wordpress-plugin
- * Plugin Name:     Plugin Name
- * Description:     This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Plugin Name:     Citas post wordpress-dev-challenge
+ * Description:     Este plugin es creado para consultar citas de un post
  * Version:         0.0.1
- * Author:          Your Name
- * Author URI:      https://www.example.com
+ * Author:          Orlando Quintero
+ * Author URI:      https://github.com/orlandoquintero45
  * License:         GPL-2.0+
  * License URI:     http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:     plugin-name
+ * Text Domain:     wordpress-dev-challenge
  * Domain Path:     /lang
  */
 
@@ -25,18 +25,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Direct access not permitted.' );
 }
 
-if ( ! class_exists( 'plugin_name' ) ) {
+if ( ! class_exists( 'wordpress_dev_challenge' ) ) {
 
 	/*
-	 * main plugin_name class
+	 * main wordpress-dev-challenge class
 	 *
-	 * @class plugin_name
+	 * @class wordpress-dev-challenge
 	 * @since 0.0.1
 	 */
-	class plugin_name {
+	class wordpress_dev_challenge {
 
 		/*
-		 * plugin_name plugin version
+		 * wordpress-dev-challenge plugin version
 		 *
 		 * @var string
 		 */
@@ -45,17 +45,17 @@ if ( ! class_exists( 'plugin_name' ) ) {
 		/**
 		 * The single instance of the class.
 		 *
-		 * @var plugin_name
+		 * @var wordpress-dev-challenge
 		 * @since 0.0.1
 		 */
 		protected static $instance = null;
 
 		/**
-		 * Main plugin_name instance.
+		 * Main wordpress-dev-challenge instance.
 		 *
 		 * @since 0.0.1
 		 * @static
-		 * @return plugin_name - main instance.
+		 * @return wordpress-dev-challenge - main instance.
 		 */
 		public static function instance() {
 			if ( is_null( self::$instance ) ) {
@@ -65,7 +65,7 @@ if ( ! class_exists( 'plugin_name' ) ) {
 		}
 
 		/**
-		 * plugin_name class constructor.
+		 * wordpress-dev-challenge class constructor.
 		 */
 		public function __construct() {
 			$this->load_plugin_textdomain();
@@ -75,7 +75,7 @@ if ( ! class_exists( 'plugin_name' ) ) {
 		}
 
 		public function load_plugin_textdomain() {
-			load_plugin_textdomain( 'plugin-name', false, basename( dirname( __FILE__ ) ) . '/lang/' );
+			load_plugin_textdomain( 'wordpress-dev-challenge', false, basename( dirname( __FILE__ ) ) . '/lang/' );
 		}
 
 		/**
@@ -83,7 +83,7 @@ if ( ! class_exists( 'plugin_name' ) ) {
 		 */
 		public function includes() {
             // Example
-			require_once __DIR__ . '/includes/loader.php';
+			//require_once __DIR__ . '/includes/loader.php';
 
 			// Load custom functions and hooks
 			require_once __DIR__ . '/includes/includes.php';
@@ -100,7 +100,7 @@ if ( ! class_exists( 'plugin_name' ) ) {
 
 
 		/**
-		 * Define plugin_name constants
+		 * Define wordpress-dev-challenge constants
 		 */
 		private function define_constants() {
 			define( 'PLUGIN_NAME_PLUGIN_FILE', __FILE__ );
@@ -110,19 +110,23 @@ if ( ! class_exists( 'plugin_name' ) ) {
 		}
 
 		/**
-		 * Define plugin_name actions
+		 * Define wordpress-dev-challenge actions
 		 */
 		public function define_actions() {
 			//
+			//creacion a meta boxes
+			add_action( 'add_meta_boxes', 'adding_custom_meta_boxes', 10, 2 );
+			//creacion de shortcode
+			add_shortcode('mc-citacion', 'shortcode_mostrar_citas');
 		}
 
 		/**
-		 * Define plugin_name menus
+		 * Define wordpress-dev-challenge menus
 		 */
 		public function define_menus() {
             //
 		}
 	}
 
-	$plugin_name = new plugin_name();
+	$plugin_name = new wordpress_dev_challenge();
 }
