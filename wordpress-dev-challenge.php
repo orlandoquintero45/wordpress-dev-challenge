@@ -118,6 +118,21 @@ if ( ! class_exists( 'wordpress_dev_challenge' ) ) {
 			add_action( 'add_meta_boxes', 'adding_custom_meta_boxes', 10, 2 );
 			//creacion de shortcode
 			add_shortcode('mc-citacion', 'shortcode_mostrar_citas');
+			//prueba 3.2
+			//agregar tabla
+			register_activation_hook(__FILE__, 'menu_link_init');
+			//menu
+			add_action("admin_menu", "menu_link_error");
+			//consultar
+			add_shortcode('menu_link_admin', 'menu_links_admin');
+			//intervalos del cron
+			add_filter( 'cron_schedules', 'cron_personalizado' );
+			//tarea del cron
+			add_action( 'bl_cron_hook', 'verificar_url' );
+			if ( ! wp_next_scheduled( 'bl_cron_hook' ) ) {
+				wp_schedule_event( time(), 'five_seconds', 'bl_cron_hook' );
+			}
+
 		}
 
 		/**
